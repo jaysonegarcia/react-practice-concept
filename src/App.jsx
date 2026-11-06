@@ -9,7 +9,7 @@ import './App.css'
 
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState('Please click a button')
+  const [selectedTopic, setSelectedTopic] = useState(null)
 
   const testValue = test(false)
 
@@ -22,10 +22,27 @@ function App() {
 
   // console.log(logs);
 
+  // Alternative dynamic content using if condition
+  let tabContent = <p>Please select a topic.</p>;
+
+  if(selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        {EXAMPLES[selectedTopic].title ? <h3>{EXAMPLES[selectedTopic].title}</h3> : null}
+        {EXAMPLES[selectedTopic].description ? <p>{EXAMPLES[selectedTopic].description}</p> : null}
+        {EXAMPLES[selectedTopic].code ? (
+          <pre>
+            <code>{EXAMPLES[selectedTopic].code}</code>
+          </pre>
+        ) : null}
+      </div>
+    )
+  }
+  // End of Alternative dynamic content using if condition
+
   function handleSelect(selectedButton) {
     // console.log(selectedButton)
     setSelectedTopic(selectedButton);
-    
   }
   
   return (
@@ -51,26 +68,54 @@ function App() {
               /> */}
 
               {/* Manual data shortcut from data.json file */}
-              <CoreConcept {...CORE_CONCEPTS[0]} />
+              {/* <CoreConcept {...CORE_CONCEPTS[0]} />
+              <CoreConcept {...CORE_CONCEPTS[1]} />
+              <CoreConcept {...CORE_CONCEPTS[2]} />
+              <CoreConcept {...CORE_CONCEPTS[3]} /> */}
+
+              {/* For loop data from data.json file */}
+              {CORE_CONCEPTS.map((item, index) => (
+                <CoreConcept key={index} {...item} />
+              ))}
             </ul>
           </section>
           <section id="examples">
               <h2>Examples</h2>
               <menu>
-                <TabButton onSelect={() => handleSelect('components')}>Components</TabButton>
-                <TabButton onSelect={() => handleSelect('jsx')}>JSX</TabButton>
-                <TabButton onSelect={() => handleSelect('props')}>Props</TabButton>
-                <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
+                {/* Manual Button Data */}
+                {/* <TabButton isSelected={selectedTopic === 'components'} onSelect={() => handleSelect('components')}>Components</TabButton>
+                <TabButton isSelected={selectedTopic === 'jsx'} onSelect={() => handleSelect('jsx')}>JSX</TabButton>
+                <TabButton isSelected={selectedTopic === 'props'} onSelect={() => handleSelect('props')}>Props</TabButton>
+                <TabButton isSelected={selectedTopic === 'state'} onSelect={() => handleSelect('state')}>State</TabButton> */}
+
+                {/* For loop data from data.json file */}
+                {Object.keys(EXAMPLES).map((key) => (
+                  <TabButton
+                    key={key}
+                    isSelected={selectedTopic === key}
+                    onSelect={() => handleSelect(key)}
+                  >
+                    {EXAMPLES[key].title}
+                  </TabButton>
+                ))}
               </menu>
+
               {/* Dynamic Content */}
-              <div id="tab-content">
-                <h3>{EXAMPLES[selectedTopic]?.title}</h3>
-                <p>{EXAMPLES[selectedTopic]?.description}</p>
-                <pre>
-                  <code>{EXAMPLES[selectedTopic]?.code}</code>
-                </pre>
-                {/* {selectedTopic} */}
-              </div>
+              {!selectedTopic ? <p>Please select a topic.</p> : null}
+              {selectedTopic ? (
+                <div id="tab-content">
+                  {EXAMPLES[selectedTopic].title ? <h3>{EXAMPLES[selectedTopic].title}</h3> : null}
+                  {EXAMPLES[selectedTopic].description ? <p>{EXAMPLES[selectedTopic].description}</p> : null}
+                  {EXAMPLES[selectedTopic].code ? (
+                    <pre>
+                      <code>{EXAMPLES[selectedTopic].code}</code>
+                    </pre>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {/* Alternative dynamic content using if condition */}
+              {/* {tabContent} */}
           </section>
           <p>{testValue}</p>
           <ul>
