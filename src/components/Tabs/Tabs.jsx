@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { EXAMPLES } from '../../data.js'
+import Heading from '../Heading/Heading.jsx'
+import Section from '../Section/Section.jsx'
 import TabButton from '../TabButton/TabButton.jsx'
 
 export default function ExamplesTabs(props) {
@@ -30,8 +32,8 @@ export default function ExamplesTabs(props) {
   
   return (
     <>
-      <section id="tabs">
-        <h2>{props.title}</h2>
+      <Section id="tabs">
+        <Heading HeadingContainer="h2">{props.title}</Heading>
         <menu>
           {/* Manual Button Data */}
           {/* <TabButton isSelected={selectedTopic === 'components'} onSelect={() => handleSelect('components')}>Components</TabButton>
@@ -67,7 +69,7 @@ export default function ExamplesTabs(props) {
 
         {/* Alternative dynamic content using if condition */}
         {/* {tabContent} */}
-      </section>
+      </Section>
     </>
   )
 }

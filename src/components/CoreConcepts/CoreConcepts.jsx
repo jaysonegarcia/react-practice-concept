@@ -1,12 +1,14 @@
 import { CORE_CONCEPTS } from '../../data.js'
 import componentsImg from '../../assets/components.png'
+import Heading from '../Heading/Heading.jsx'
+import Section from '../Section/Section.jsx'
 import CoreConcept from '../CoreConcept/CoreConcept.jsx'
 
 export default function CoreConcepts(props) {
   return (
     <>
-      <section id="core-concepts">
-        <h2>{props.title}</h2>
+      <Section id="core-concepts">
+        <Heading HeadingContainer="h2">{props.title}</Heading>
         <ul>
           {/* Manual data */}
           {/* <CoreConcept
@@ -33,7 +35,7 @@ export default function CoreConcepts(props) {
             <CoreConcept key={index} {...item} />
           ))}
         </ul>
-      </section>
+      </Section>
     </>
   )
 }
